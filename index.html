@@ -1,0 +1,1495 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ぱる鯖 - ゲームアカウント販売</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #ffffff;
+            background: #000;
+            overflow-x: hidden;
+        }
+
+    html {
+        /* scroll-snap-type: y mandatory; 削除またはコメントアウト */
+        scroll-behavior: smooth;
+    }
+    
+
+    .section {
+        min-height: 100vh;
+        /* scroll-snap-align: start; 削除またはコメントアウト */
+        position: relative;
+    }
+
+        /* ヘッダー（固定） */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            padding: 1rem 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+.logo-title {
+    color: #38e54d;
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-align: center;
+    text-shadow:
+        0 0 8px #38e54d,
+        0 0 16px #fff,
+        0 0 24px #38e54d,
+        0 0 32px #fff;
+}
+
+
+.logo {
+    font-size: 2rem;
+    font-weight: bold;
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+
+    /* 互換性のために両方記述 */
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    -webkit-text-fill-color: transparent; /* Chrome, Safari, Edge */
+    color: transparent; /* Firefox 対応の可能性（限定的） */
+
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+
+        .logo:hover {
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 10px rgba(34, 197, 94, 0.6));
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: 500;
+            transition: all 0.3s;
+            position: relative;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+        }
+
+        .nav-menu a:hover {
+            background: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+            transform: translateY(-2px);
+        }
+
+        .discord-btn {
+            background: linear-gradient(135deg, #5865F2, #4752C4);
+            color: #fff;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .discord-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(88, 101, 242, 0.4);
+        }
+
+        /* ヒーローセクション - フルスクリーン背景 */
+        .hero {
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+        }
+
+        .hero-bg.active {
+            opacity: 1;
+        }
+
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                45deg, 
+                rgba(34, 197, 94, 0.3) 0%, 
+                rgba(0, 0, 0, 0.7) 50%, 
+                rgba(16, 185, 129, 0.3) 100%
+            );
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            max-width: 800px;
+            padding: 2rem;
+            animation: heroFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes heroFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .hero h1 {
+    font-size: 5rem;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #22c55e, #10b981, #dcfce7);
+    
+    /* 互換性対応：WebKit系 + 標準プロパティ */
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    /* テキストを透明に（WebKit用 + フォールバック） */
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+
+    text-shadow: 0 0 50px rgba(34, 197, 94, 0.5);
+    animation: glowPulse 2s ease-in-out infinite alternate;
+    }
+.staff.section {
+    padding: 4rem 0;
+    background: #0a0a0a;
+    position: relative;
+}
+
+.staff-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.staff-member {
+    background: #111111 !important;
+    border-radius: 12px;
+    padding: 2rem;
+    transition: all 0.4s ease;
+    border: 1px solid #00ff88;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+}
+
+.staff-member * {
+    background: transparent !important;
+}
+
+.staff-member::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #00ff88 0%, #22ff88 50%, #00dd77 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.staff-member:hover::before {
+    opacity: 1;
+}
+
+.staff-member:hover {
+    background: #111111 !important;
+    transform: translateY(-8px) scale(1.02);
+    border-color: #00ff88;
+    box-shadow: 0 12px 30px rgba(0, 255, 136, 0.3), 0 4px 15px rgba(0,0,0,0.6);
+}
+
+.staff-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin: 0 auto 1.5rem;
+    display: block;
+    object-fit: cover;
+    border: 2px solid #00ff88;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 255, 136, 0.3);
+    background: transparent !important;
+}
+
+.staff-member:hover .staff-avatar {
+    border-color: #00ff88;
+    box-shadow: 0 6px 20px rgba(0, 255, 136, 0.5);
+    transform: scale(1.05);
+}
+
+.staff-member h3 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #ffffff !important;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 10px rgba(0, 255, 136, 0.6);
+    background: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.staff-member p {
+    color: #00ff88 !important;
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 8px rgba(0, 255, 136, 0.8);
+    background: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.staff-comment {
+    color: #d1d5db !important;
+    line-height: 1.7;
+    font-size: 0.95rem;
+    background: #222222 !important;
+    padding: 1rem;
+    border-radius: 8px;
+    border-left: 3px solid #00ff88;
+    margin-top: 1rem;
+    position: relative;
+}
+
+.staff-comment::before {
+    content: '"';
+    position: absolute;
+    top: -0.5rem;
+    left: 0.5rem;
+    font-size: 2rem;
+    color: rgba(0, 255, 136, 0.8);
+    font-family: serif;
+}
+
+.staff-comment::after {
+    content: '"';
+    position: absolute;
+    bottom: -0.5rem;
+    right: 0.5rem;
+    font-size: 2rem;
+    color: rgba(0, 255, 136, 0.8);
+    font-family: serif;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    text-align: center;
+    color: #ffffff !important;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 20px rgba(0, 255, 136, 0.8);
+    position: relative;
+    background: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, #00ff88 0%, #22ff88 100%);
+    border-radius: 2px;
+}
+
+/* 強制的に全ての要素を黒背景にする */
+.staff.section,
+.staff.section *,
+.staff-grid,
+.staff-grid *,
+.staff-member,
+.staff-member * {
+    background-color: transparent !important;
+}
+
+.staff.section {
+    background-color: #0a0a0a !important;
+}
+
+.staff-member {
+    background-color: #111111 !important;
+}
+
+.staff-comment {
+    background-color: #222222 !important;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+    .staff-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .staff-member {
+        padding: 1.5rem;
+        background: #111111 !important;
+    }
+    
+    .staff-avatar {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .staff-member h3 {
+        font-size: 1.2rem;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+}
+    /* レスポンシブ対応（スマホ画面ではフォントを縮小） */
+    @media (max-width: 600px) {
+        .hero h1 {
+            font-size: 2.5rem;
+            text-align: center; /* 必要に応じて中央寄せ */
+        }
+    }
+
+
+        @keyframes glowPulse {
+            from { filter: drop-shadow(0 0 20px rgba(34, 197, 94, 0.5)); }
+            to { filter: drop-shadow(0 0 40px rgba(34, 197, 94, 0.8)); }
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            color: #f1f5f9;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+            animation: fadeInUp 1s ease-out 0.5s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-btn {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            color: #000;
+            padding: 1.2rem 2.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(34, 197, 94, 0.3);
+            animation: fadeInUp 1s ease-out 1s both;
+        }
+
+        .hero-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(34, 197, 94, 0.5);
+        }
+    /* ゲーム一覧セクション */
+    .games {
+        background: linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 100%);
+        padding: 4rem 2rem;
+        position: relative;
+    }
+
+    .games::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 100px;
+        background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(10,10,10,1) 100%);
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .section-title {
+        text-align: center;
+        font-size: 3rem;
+        margin-bottom: 3rem;
+
+        background: linear-gradient(135deg, #22c55e, #16a34a);
+
+        /* 背景クリッピング：互換性対応 */
+        -webkit-background-clip: text;
+        background-clip: text;
+
+
+        animation: slideInFromLeft 1s ease-out;
+    }
+
+        @keyframes slideInFromLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .game-card {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(22, 163, 74, 0.05));
+            border: 2px solid rgba(34, 197, 94, 0.3);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(34, 197, 94, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .game-card:hover::before {
+            left: 100%;
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: rgba(34, 197, 94, 0.8);
+            box-shadow: 0 20px 40px rgba(34, 197, 94, 0.3);
+        }
+
+        .game-title {
+            font-size: 1.8rem;
+            color: #22c55e;
+            margin-bottom: 1rem;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .game-preview {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, #1a1a1a, #2a2a2a);
+            border-radius: 15px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: #64748b;
+            border: 1px solid rgba(34, 197, 94, 0.2);
+        }
+
+        /* 自販機セクション */
+        .vending {
+            background: linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 100%);
+            padding: 4rem 2rem;
+            position: relative;
+        }
+
+        .vending-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* ← 3列固定に */
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .vending-item {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 15px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .vending-item::after {
+            content: '🛒';
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.2rem;
+            opacity: 0.5;
+            transition: all 0.3s;
+        }
+
+        .vending-item:hover {
+            border-color: rgba(34, 197, 94, 0.8);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(34, 197, 94, 0.2);
+        }
+
+        .vending-item:hover::after {
+            opacity: 1;
+            transform: scale(1.2);
+        }
+
+        .vending-price {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            color: #000;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 0.5rem;
+        }
+
+        /* スタッフセクション */
+        .staff {
+            background: linear-gradient(180deg, #0f0f0f 0%, #1a1a1a 100%);
+            padding: 4rem 2rem;
+        }
+
+        .staff-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .staff-member {
+            text-align: center;
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(0, 0, 0, 0.5));
+            padding: 2rem;
+            border-radius: 20px;
+            border: 2px solid rgba(34, 197, 94, 0.3);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .staff-member:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(34, 197, 94, 0.3);
+            border-color: rgba(34, 197, 94, 0.6);
+        }
+
+        .staff-avatar {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            transition: all 0.3s;
+        }
+
+        .staff-member:hover .staff-avatar {
+            transform: rotate(360deg) scale(1.1);
+        }
+
+        .twitter-icon {
+            margin-top: 1rem;
+            color: #1DA1F2;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .twitter-icon:hover {
+            color: #0d8bd1;
+            transform: scale(1.2);
+        }
+
+        /* 利用規約セクション */
+        .terms {
+            background: linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%);
+            padding: 4rem 2rem;
+        }
+
+        .terms-content {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 3rem;
+            border-radius: 20px;
+            border: 2px solid rgba(34, 197, 94, 0.3);
+            backdrop-filter: blur(20px);
+        }
+
+        .terms h3 {
+            color: #22c55e;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .terms ul {
+            margin-left: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .terms li {
+            margin-bottom: 0.8rem;
+            color: #cbd5e1;
+            line-height: 1.8;
+        }
+
+        /* フッター */
+        .footer {
+            background: rgba(0, 0, 0, 0.95);
+            padding: 3rem 2rem 1rem;
+            border-top: 2px solid rgba(34, 197, 94, 0.3);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer h3 {
+            color: #22c55e;
+            margin-bottom: 1rem;
+        }
+
+        .footer p {
+            color: #cbd5e1;
+            line-height: 1.8;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(34, 197, 94, 0.3);
+            margin-top: 2rem;
+            color: #64748b;
+        }
+
+        /* レスポンシブ */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .games-grid,
+            .vending-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        /* スクロールバー */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #16a34a, #15803d);
+        }
+
+        /* パーティクルアニメーション */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #22c55e;
+            border-radius: 50%;
+            animation: float 6s linear infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-10vh) translateX(100px); opacity: 0; }
+        }
+        .vending-icon {
+      width: 64px;
+      height: 64px;
+      object-fit: cover;
+      border-radius: 12px;
+      display: block;
+      margin: 0 auto 8px auto;
+    }
+    .game-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* 子要素（画像やテキスト）を中央ぞろえ */
+        justify-content: flex-start;
+        text-align: center;  /* テキストも中央揃えに */
+        padding: 16px;
+    }
+    .game-preview {
+        display: block;
+        margin: 0 auto 12px auto; /* 上下中央、下に余白 */
+    }
+
+    .staff-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 32px;
+    justify-items: center; /* 各カードを中央揃え */
+}
+
+    .staff-member {
+        display: flex;
+        flex-direction: column;
+        align-items: center;   /* 中央揃え */
+        background: #f9f9f9;
+        border-radius: 12px;
+        padding: 24px 16px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .staff-avatar {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        border-radius: 50%;
+        margin-bottom: 12px;
+        background: #eee;
+        display: block;
+    }
+
+    .staff-comment {
+        margin: 10px 0 0 0;
+        font-size: 0.95em;
+        color: #666;
+        text-align: center;
+    }
+
+    .twitter-icon {
+        font-size: 1.5em;
+        margin-top: 10px;
+        cursor: pointer;
+    }body {
+    background: #181a1b;
+    color: #fff;
+    font-family: 'Noto Sans JP', 'Meiryo', sans-serif;
+}
+
+.achievements {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 16px;
+}
+
+.achievements h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 24px;
+    color: #fff;
+    text-shadow:
+        0 0 8px #38ff7b,
+        0 0 16px #38ff7b;
+    letter-spacing: 0.1em;
+    border-bottom: 3px solid #38ff7b;
+    padding-bottom: 6px;
+}
+
+.achievement-stats {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-bottom: 32px;
+}
+
+.stat-item {
+    background: rgba(24,26,27,0.8);
+    border: 2px solid #38ff7b;
+    border-radius: 16px;
+    padding: 18px 28px;
+    text-align: center;
+    box-shadow:
+        0 0 10px #38ff7b44,
+        0 0 20px #38ff7b22;
+}
+
+.stat-number {
+    display: block;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #38ff7b;
+    text-shadow:
+        0 0 8px #38ff7b,
+        0 0 16px #38ff7b;
+}
+
+.stat-label {
+    display: block;
+    margin-top: 8px;
+    font-size: 1.1rem;
+    color: #fff;
+}
+
+.achievement-description {
+    background: rgba(24,26,27,0.7);
+    border-left: 4px solid #38ff7b;
+    border-radius: 10px;
+    margin: 0 auto 32px auto;
+    max-width: 700px;
+    padding: 20px 24px;
+    box-shadow: 0 0 8px #38ff7b33;
+}
+
+.achievement-description strong {
+    color: #38ff7b;
+    text-shadow: 0 0 8px #38ff7b;
+}
+
+.achievement-gallery {
+    display: flex;
+    gap: 32px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.achievement-card {
+    background: rgba(24,26,27,0.9);
+    border: 2px solid #38ff7b;
+    border-radius: 18px;
+    width: 300px;
+    padding: 24px 18px;
+    box-shadow:
+        0 0 10px #38ff7b44,
+        0 0 20px #38ff7b22;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 24px;
+}
+.achievement-image {
+    width: 220px;        /* 横幅 */
+    height: 110px;       /* 縦幅 */
+    background: #222;
+    border-radius: 18px; /* 角丸（お好みで調整） */
+    margin-bottom: 14px;
+    border: 3px solid #38ff7b;
+    box-shadow:
+        0 0 8px #38ff7b,
+        0 0 18px #38ff7b55;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;    /* 画像がはみ出さないように */
+}
+
+.achievement-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;   /* 画像を枠いっぱいにトリミング表示 */
+    display: block;
+}
+
+.achievement-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #38ff7b;
+    text-shadow: 0 0 8px #38ff7b;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+.achievement-text {
+    color: #fff;
+    text-align: center;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 900px) {
+    .achievement-gallery {
+        flex-direction: column;
+        align-items: center;
+    }
+    .achievement-card {
+        width: 90%;
+    }
+    .achievement-stats {
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+
+        /* レスポンシブ */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            .nav-menu {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .main-content {
+                margin-top: 120px;
+            }
+
+            .achievements h2 {
+                font-size: 2rem;
+            }
+
+            .achievement-stats {
+                gap: 1rem;
+            }
+
+            .stat-item {
+                min-width: 120px;
+                padding: 1rem;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            .achievement-gallery {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+        }
+    .achievements {
+        background: rgba(16, 32, 16, 0.55);  /* 透過＋背景ぼかし */
+        backdrop-filter: blur(12px);
+        border-radius: 20px;
+        box-shadow: 0 8px 24px rgba(34, 197, 94, 0.08);
+        border: 1.5px solid rgba(34, 197, 94, 0.14);
+        padding: 4rem 2rem;
+        color: #e5ffe1;
+    }
+
+
+        /* レスポンシブ */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            .nav-menu {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .main-content {
+                margin-top: 120px;
+            }
+
+            .achievements h2 {
+                font-size: 2rem;
+            }
+
+            .achievement-stats {
+                gap: 1rem;
+            }
+
+            .stat-item {
+                min-width: 120px;
+                padding: 1rem;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            .achievement-gallery {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+        }
+
+
+    </style>
+</head>
+<body>
+    <!-- パーティクル背景 -->
+    <div class="particles" id="particles"></div>
+
+    <!-- ヘッダー -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo" onclick="scrollToTop()">ぱる鯖</div>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="#games">取扱ゲーム</a></li>
+                    <li><a href="#achievements">実績</a></li>
+                    <li><a href="#vending">自販機</a></li>
+                    <li><a href="#staff">スタッフ</a></li>
+                    <li><a href="#terms">利用規約</a></li>
+                </ul>
+            </nav>
+            <a href="https://discord.gg/nRfbAwgDgT" class="discord-btn" target="_blank" rel="noopener noreferrer">discordサーバー</a>
+        </div>
+    </header>
+
+    <!-- ヒーローセクション -->
+    <section class="hero section">
+        <div class="hero-bg active" style="background-image: url('https://kabekin.com/uploads/converted/23/04/14/1964416043-nahida_glassgod_pc_wallpaper_1920_kabekin-oVvA-1536x864-MM-100.jpg')"></div>
+        <div class="hero-bg" style="background-image: url('https://9-gld.net/genshin/wp-content/uploads/2022/11/01-2-940x529.jpg')"></div>
+        <div class="hero-bg" style="background-image: url('https://i.pximg.net/img-master/img/2022/11/03/01/08/47/102465527_p0_master1200.jpg')"></div>
+        <div class="hero-bg" style="background-image: url('https://i.ytimg.com/vi/ty2PrNLTRHU/sddefault.jpg')"></div>
+        
+        <div class="hero-content">
+            <h1>ぱる鯖</h1>
+            <p>高品質なゲームアカウントを安全・確実にお届け<br>フリーマーケット完備、運営グループに実績多数の仲介員在籍、PayPay決済対応、24時間自動販売機完備</p>
+            <button class="hero-btn" onclick="scrollToSection('games')">ゲーム一覧を見る</button>
+        </div>
+    </section>
+
+    <!-- ゲーム一覧セクション -->
+    <section class="games section" id="games">
+        <div class="container">
+            <h2 class="section-title">取扱ゲーム一覧</h2>
+            <p style="font-size: 0.8em; color: #888; margin-top: -10px; margin-bottom: 20px;">
+                （※以下の内容は予告なく取り扱いをやめる場合があります。）
+            </p>
+        <div class="games-grid">
+            <div class="games-grid">
+                <div class="game-card" onclick="openGameDetail('genshin')">
+                    <img class="game-preview" src="https://upload-os-bbs.hoyolab.com/upload/2021/08/05/72354102/caca7eebb8162aaebc7c8b729734242b_2822963320735910337.jpg?x-oss-process=image%2Fresize%2Cs_1000%2Fauto-orient%2C0%2Finterlace%2C1%2Fformat%2Cwebp%2Fquality%2Cq_70" alt="原神アイコン" style="width:100px; height:100px; object-fit:cover; border-radius:8px;">
+                    <div class="game-title">原神 - Genshin Impact</div>
+                    <p>原石大量アカウント取り扱い中！<br></p>
+                </div>
+
+
+                <div class="game-card" onclick="openGameDetail('starrail')">
+                    <img class="game-preview" src="https://prcdn.freetls.fastly.net/release_image/96124/95/96124-95-2968c53bf431dedbc299b62d82621c5b-1024x1024.png?format=jpeg&auto=webp&quality=85%2C65&width=1950&height=1350&fit=bounds" alt="スタレアイコン" style="width:100px; height:100px; object-fit:cover; border-radius:8px;">
+                    <div class="game-title">崩壊スターレイル</div>
+                    <p>星玉・チケット大量セット<br>キャラ指定進行垢対応</p>
+                </div>
+
+                <div class="game-card" onclick="openGameDetail('zenless')">
+                     <img class="game-preview" src="https://item-bs.jp/wp-content/uploads/2022/11/zenzero.jpg" alt="ゼンレスゾーンゼロアイコン" style="width:100px; height:100px; object-fit:cover; border-radius:8px;">""                    <div class="game-title">ゼンレスゾーンゼロ</div>
+                    <p>ポリクローム・テープ大量<br>キャラ+石垢対応</p>
+                </div>
+
+                <div class="game-card" onclick="openGameDetail('wuwa')">
+                     <img class="game-preview" src="https://pbs.twimg.com/profile_images/1787671789151346688/vmNDPAD1_400x400.jpg" alt="鳴潮アイコン" style="width:100px; height:100px; object-fit:cover; border-radius:8px;">
+                    <div class="game-title">鳴潮</div>
+                    <p>星声・チケット大量パック<br>初期垢・進行垢選択可</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 自販機セクション -->
+    <section class="vending section" id="vending">
+        <div class="container">
+            <h2 class="section-title">自動販売機メニュー</h2>
+            <p style="text-align: center; margin-bottom: 2rem; color: #cbd5e1; font-size: 1.2rem;">
+                discordサーバーにて24時間いつでも即時購入可能！（サーバーではより多くの種類を取り扱っています。）
+            </p>
+            <div class="vending-grid">
+                <div class="vending-item">
+                    <img src="https://mixi.co.jp/app/uploads/old/entryimage/MS_App_icon_new.png" alt="モンスト" class="vending-icon">
+                    <strong>【モンスト】</strong><br>
+                    1500石前後 ヤクモ確定 ファン玉有り
+                </div>
+                
+                <div class="vending-item">
+                    <img src="https://play-lh.googleusercontent.com/VRx56wnMgHukp0X95yrwsDMWDBp2rDjKauh4QgJwVtM7CQljIMKf1zBefkCyXpWKHOg" alt="ファンパレ" class="vending-icon">
+                    <strong>【ファンパレ】</strong><br>
+                    11.5万石 SSR券4枚 チケ40枚
+                </div>
+                
+                <div class="vending-item">
+                    <img src="https://nishispo-static.nishinippon.co.jp/image/article/size1/3/4/7/3/347325da53562154b7efe3220a34079b_1.jpg" alt="ポケポケ" class="vending-icon">
+                    <strong>【ポケポケ】</strong><br>
+                    ゴールド23 パック900 チャレンジ1000
+                </div>
+                
+            </div>
+
+                
+            </div>
+        </div>
+    
+    </section>
+    
+    <section id="achievements" class="achievements">
+        <h2>実績・成果</h2>
+        <div class="achievement-stats">
+            <div class="stat-item">
+                <span class="stat-number" data-target="2500">0</span>
+                <span class="stat-label">総取引件数</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" data-target="98">0</span>
+                <span class="stat-label">満足度</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" data-target="24">0</span>
+                <span class="stat-label">稼働時間</span>
+            </div>
+        </div>
+
+
+        <div class="achievement-description">
+            <p>
+                ぱる鯖は2024.10.1の設立以来、<strong>2,500件を超える取引実績</strong>を積み重ねてまいりました。
+                お客様に安全で信頼できるゲームアイテム取引環境を提供することを第一に、
+                厳格な品質管理と迅速な対応で多くの皆様にご愛用いただいております。
+            </p>
+            <p>
+                私たちの強みは、豊富な経験に基づく安定したサービス提供と、
+                お客様一人ひとりのニーズに合わせたきめ細やかなサポートです。
+                これからも皆様に愛されるサーバーを目指して、より良いサービスを提供してまいります。
+            </p>
+        </div>
+<div class="achievement-gallery">
+    <div class="achievement-card">
+        <div class="achievement-image">
+            <img src="https://i3.gamebiz.jp/images/original/1482949689609b3403d41580026.jpg" alt="安全な取引環境">
+        </div>
+        <div class="achievement-title">安全な取引環境</div>
+        <div class="achievement-text">
+            厳格なセキュリティ体制のもと、すべての取引を安全に管理。
+            不正行為の監視とアカウント保護を徹底しています。
+        </div>
+    </div>
+    <div class="achievement-card">
+        <div class="achievement-image">
+            <img src="https://i.ytimg.com/vi/1NJLmm-DAs4/maxresdefault.jpg" alt="迅速な対応">
+        </div>
+        <div class="achievement-title">迅速な対応</div>
+        <div class="achievement-text">
+            24時間体制でのサポートにより、お客様のご要望に
+            迅速かつ丁寧にお応えいたします。
+        </div>
+    </div>
+    <div class="achievement-card">
+        <div class="achievement-image">
+            <img src="https://i.ytimg.com/vi/ShXMRsQCy_U/maxresdefault.jpg" alt="豊富な品揃え">
+        </div>
+        <div class="achievement-title">豊富な品揃え</div>
+        <div class="achievement-text">
+            人気ゲームの幅広いアイテムを取り揃え、
+            お客様のニーズに合わせた商品を提供しています。
+        </div>
+    </div>
+</div>
+
+<section class="staff section" id="staff">
+    <div class="container">
+        <h2 class="section-title">スタッフ紹介</h2>
+        <div class="staff-grid">
+            <div class="staff-member">
+                <img class="staff-avatar" src="https://cdn.discordapp.com/attachments/1265215886436995125/1375494024659472546/image.png?ex=6831e422&is=683092a2&hm=415a5064b099638bb2b66b3dde1d329a984db0c6842242273e3bfc2744007659&" alt="オーナー" />
+                <h3>ぱるる</h3>
+                <p>【役職】サーバー管理・運営責任者</p>
+                <div class="staff-comment">理不尽なX垢凍結によって再度力を蓄えてるわが軍勢の総帥。とても丁寧でやさしいひと！</div>
+            </div>
+            <div class="staff-member">
+                <img class="staff-avatar" src="https://cdn.discordapp.com/attachments/1265215886436995125/1375532231333773342/IMG_2491.jpg?ex=683207b8&is=6830b638&hm=ba25942bc356eb271431069b0effdd1447ccbdf77b69dccc508af10334f43912&" alt="マネージャー" />
+                <h3>しのだ</h3>
+                <p>【役職】仲介司会進行、コミュニティ治安維持</p>
+                <div class="staff-comment">わが軍最強の火力枠、サーバールール違反者に目を光らせ常にみんなの快適なサーバーライフに尽力！一見怖いって聞きがちだけど話してみると面白いよ！</div>
+            </div>
+            <div class="staff-member">
+                <img class="staff-avatar" src="https://cdn.discordapp.com/attachments/1265215886436995125/1375570168742416515/image.png?ex=68322b0d&is=6830d98d&hm=c2d048e33bd643c28207ba9253dcc91dfa50d22f3e9222a33e7425ab745c9dcc&" alt="ゲームスペシャリスト" />
+                <h3>つぶらなひとみ、風間隼、田中ゲイ、ながくら（同一人物）</h3>
+                <p>【役職】ツール管理・開発</p>
+                <div class="staff-comment">このページを作った人。わが軍きっての狂人枠、特に何かしているわけではないがデカい顔をしている。けつがデカい。</div>
+            </div>
+            <div class="staff-member">
+                <img class="staff-avatar" src="https://iconbu.com/wp-content/uploads/2023/07/%E3%82%B5%E3%82%AB%E3%83%90%E3%83%B3%E3%83%90%E3%82%B9%E3%83%94%E3%82%B9.jpg" alt="テクニカルサポート" />
+                <h3>xelzさん</h3>
+                <p>捜索願提出済み</p>
+                <div class="staff-comment">最近コップの水に溶けてしまった、普通に見つけたら幸せになれるし当然恋人もできるし宝くじも当たる。</div>
+
+            </div>
+        </div>
+    </div>
+</section>
+<!-- 利用規約セクション -->
+<section class="terms section" id="terms">
+    <div class="container">
+        <h2 class="section-title">利用規約</h2>
+        <div class="terms-content">
+
+            <h3>🔒 基本ルール・禁止事項</h3>
+            <ul>
+                <li><strong>外部誘導禁止：</strong>他サーバーへの勧誘・招待URLの投稿は禁止です。</li>
+                <li><strong>荒らし・迷惑行為は即BAN：</strong>誹謗中傷や過度な下ネタなど、不快な言動は禁止です。みんなで快適な雰囲気を作りましょう。</li>
+                <li><strong>フリーマーケット利用時の禁止行為：</strong>
+                    <ul>
+                        <li>チート・違法性のあるものの販売</li>
+                        <li>鯖主以外による石垢の販売</li>
+                        <li>買取価格での購入や破格での販売（値段が分からない場合は査定を利用）</li>
+                        <li>無在庫販売・メゾット等の販売</li>
+                        <li>同内容のスレッド乱立（古いスレッドはクローズして再投稿OK）</li>
+                    </ul>
+                </li>
+                <li><strong>個人間取引・DM誘導禁止：</strong>必ず「しのだ」の仲介を挟んでください。仲介なしの取引は即BAN対象です。</li>
+                <li><strong>詐欺・不正行為は即BAN：</strong>被害に遭った場合は証拠画像をチケットで提出してください。</li>
+            </ul>
+
+            <h3>💰 仲介料金について</h3>
+            <ul>
+                <li>取引額に応じて仲介費が発生します（PayPayでお支払いください）</li>
+                <li>1～14k：600pay<br>
+                    15～29k：1200pay<br>
+                    30～44k：1800pay<br>
+                    以降、取引額が約15k増えるごとに＋600pay</li>
+                <li>分割払いは仲介費＋1000pay</li>
+                <li>交換は一律1000pay</li>
+                <li>迷惑料は場合により最大1k発生することがあります</li>
+                <li>仲介費の返金は致しません</li>
+            </ul>
+
+            <h3>🛡️ トラブル・免責事項</h3>
+            <ul>
+                <li>取引後のトラブルやアカウント問題には運営は責任を負いません。個人間で解決してください。</li>
+                <li>仲介費負担者を決めてから依頼してください。</li>
+                <li>アカウント等に問題が発生した場合は没収となる場合があります。</li>
+                <li>フリーマーケット利用者は必ず本規約を確認してください。違反者にはロール付与、2回目以降はBANとなります。</li>
+            </ul>
+
+            <h3>📢 重要なお知らせ</h3>
+            <ul>
+                <li>フリーマーケット出品者は、取引成立時に必ず「しのだ」の仲介を挟んでください。</li>
+                <li>仲介なしの個人間取引が発覚した場合、両者即BANとなります。「知らない/見ていない」は通用しません。</li>
+                <li>しのだ以外の仲介も禁止です。</li>
+                <li>提案・交渉は必ずスレッド内で行い、DM誘導は控えてください。</li>
+            </ul>
+
+            <h3>その他</h3>
+            <ul>
+                <li>販売して良いのはゲームアカウントのみです。</li>
+                <li>運営は利用者間のトラブルに介入しません。悪質と判断した場合はBANします。</li>
+            </ul>
+
+            <p style="color:#e11d48; font-weight:bold; margin-top:1.5em;">
+                ※本規約は予告なく変更される場合があります。<br>
+                安心・安全な取引のため、ご協力をお願いします。
+            </p>
+        </div>
+    </div>
+
+
+    <!-- フッター -->
+    <footer class="footer">
+        <div class="footer-content">
+            <h3>ぱる鯖</h3>
+            <p>安全・確実なゲームアカウント販売<br>
+            24時間サポート対応</p>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 ぱる鯖. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // 背景画像スライドショー
+        let currentBg = 0;
+        const backgrounds = document.querySelectorAll('.hero-bg');
+        
+        function switchBackground() {
+            backgrounds[currentBg].classList.remove('active');
+            currentBg = (currentBg + 1) % backgrounds.length;
+            backgrounds[currentBg].classList.add('active');
+        }
+        
+        setInterval(switchBackground, 5000);
+
+        // パーティクル生成
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 2 + 's';
+            particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+            document.getElementById('particles').appendChild(particle);
+            
+            setTimeout(() => {
+                particle.remove();
+            }, 6000);
+        }
+        
+        setInterval(createParticle, 300);
+        // スムーズスクロール
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+
+        
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // スムーススクロール
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+document.addEventListener('DOMContentLoaded', function() {
+    const counters = document.querySelectorAll('.stat-number');
+    let hasAnimated = false; // 一度だけアニメーションするためのフラグ
+
+    function countUp(counter, target, suffix = '') {
+        let count = 0;
+        const increment = Math.ceil(target / 70); // アニメーション速度
+        function update() {
+            count += increment;
+            if (count > target) count = target;
+            counter.textContent = count + suffix;
+            if (count < target) {
+                requestAnimationFrame(update);
+            }
+        }
+        update();
+    }
+
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !hasAnimated) {
+                counters.forEach(counter => {
+                    const target = Number(counter.getAttribute('data-target'));
+                    let suffix = '';
+                    const label = counter.nextElementSibling.textContent;
+                    if (label.includes('満足度')) suffix = '%';
+                    if (label.includes('取引件数')) suffix = '+';
+                    if (label.includes('稼働時間')) suffix = '時間';
+                    countUp(counter, target, suffix);
+                });
+                hasAnimated = true;
+                observer.disconnect(); // 一度だけアニメーション
+            }
+        });
+    }, { threshold: 0.3 }); // 30%見えたら発火
+
+    observer.observe(document.querySelector('.achievement-stats'));
+});
+
+        // スクロール時のアニメーション
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const statNumbers = entry.target.querySelectorAll('.stat-number');
+                    statNumbers.forEach((num, index) => {
+                        const targets = [2500, 98, 24];
+                        setTimeout(() => {
+                            animateCounter(num, targets[index]);
+                        }, index * 200);
+                    });
+                    observer.unobserve(entry.target);
+                }
+            });
+        });
+
+
+    </script>
+        
